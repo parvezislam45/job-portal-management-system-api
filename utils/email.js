@@ -45,24 +45,24 @@ module.exports.sendMailWithGmail = async (data) => {
 
 
 // WITH MAILGUN
-const formData = require("form-data");
-const Mailgun = require("mailgun.js");
-const mailgun = new Mailgun(formData);
+// const formData = require("form-data");
+// const Mailgun = require("mailgun.js");
+// const mailgun = new Mailgun(formData);
 
-const mg = mailgun.client({
-  username: "api",
-  key: process.env.MAILGUN_API_KEY,
-});
+// const mg = mailgun.client({
+//   username: "api",
+//   key: process.env.MAILGUN_API_KEY,
+// });
 
-module.exports.sendMailWithMailGun = async (data) => {
-  const result = await mg.messages
-    .create("sandboxf3104014604b45b09c95dd762669be2b.mailgun.org", {
-      from: "Mailgun Sandbox <postmaster@sandboxf3104014604b45b09c95dd762669be2b.mailgun.org>",
-      to: data.to,
-      subject: data.subject,
-      text: data.text,
-    });
+// module.exports.sendMailWithMailGun = async (data) => {
+//   const result = await mg.messages
+//     .create("sandboxf3104014604b45b09c95dd762669be2b.mailgun.org", {
+//       from: "Mailgun Sandbox <postmaster@sandboxf3104014604b45b09c95dd762669be2b.mailgun.org>",
+//       to: data.to,
+//       subject: data.subject,
+//       text: data.text,
+//     });
 
-    return result.id;
+//     return result.id;
 
-};
+// };

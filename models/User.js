@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema(
         validator: (value) =>
           validator.isStrongPassword(value, {
             minLength: 6,
-            minLowercase: 3,
+            minLowercase: 1,
             minNumbers: 1,
             minUppercase: 1,
             minSymbols: 1,
@@ -42,8 +42,9 @@ const userSchema = mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["buyer", "store-manager", "admin"],
-      default: "buyer",
+      enum: ["Candidate", "Hiring-Manager", "Admin"],
+      // enum: ["Candidate", "Hiring-Manager", "Admin"],
+      default: "Candidate",
     },
 
     firstName: {
@@ -62,10 +63,12 @@ const userSchema = mongoose.Schema(
     },
     contactNumber: {
       type: String,
-      validate: [validator.isMobilePhone, "Please provide a valid contact number"],
+      validate: [
+        validator.isMobilePhone,
+        "Please provide a valid contact number",
+      ],
     },
 
-    shippingAddress: String,
 
     imageURL: {
       type: String,
