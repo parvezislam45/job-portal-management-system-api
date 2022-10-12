@@ -1,3 +1,4 @@
+const { Router } = require("express");
 const express = require("express");
 const router = express.Router();
 const jobController = require("../controllers/job.controller");
@@ -14,7 +15,8 @@ router
     verifyToken,
     authorization("Admin", "Hiring-Manager"),
     jobController.createJob
-  );
+  )
+  
 
 router
   .route("/manager/jobs")
@@ -22,6 +24,21 @@ router
     verifyToken,
     authorization("Admin", "Hiring-Manager"),
     jobController.getJobsByManagerToken
+  );
+
+router
+.route("/manager/jobs/:id").get(
+  verifyToken,
+  authorization("Admin", "Hiring-Manager"),
+  jobController.getJobByManagerTokenJobId
+);
+
+router
+  .route("/jobs/:id")
+  .patch(
+    verifyToken,
+    authorization("Admin", "Hiring-Manager"),
+    jobController.updateJob
   );
 
 // router.route("/:id").get(jobController.getJobById);

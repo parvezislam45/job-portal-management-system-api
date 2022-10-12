@@ -35,15 +35,16 @@ exports.getJobByIdService = async (id) => {
 exports.createJobService = async (data) => {
   const job = await Job.create(data);
   const result = await Job.findOne({ _id: job._id })
-  .select("-applications")
-  .populate({
-    path: "companyInfo",
-    select: "-jobPosts",
-    populate: {
-      path: "managerName",
-      select: "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
-    },
-  });
+    .select("-applications")
+    .populate({
+      path: "companyInfo",
+      select: "-jobPosts",
+      populate: {
+        path: "managerName",
+        select:
+          "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+      },
+    });
   const company = await Company.findOne({ _id: job.companyInfo._id });
   company.jobPosts.push(job._id);
   await company.save({
@@ -51,6 +52,17 @@ exports.createJobService = async (data) => {
   });
   //push the jobPost in companyInfo's Job post array
 
+  return result;
+};
+
+exports.updateJobService = async (jobId, data) => {
+  const result = await Job.updateOne(
+    { _id: jobId },
+    { $set: data },
+    {
+      runValidators: true,
+    }
+  );
   return result;
 };
 

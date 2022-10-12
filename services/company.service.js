@@ -10,7 +10,7 @@ exports.getCompaniesService = async (filters, queries) => {
     .sort(queries.sortBy)
     .populate({
       path: "managerName",
-      select: "-password -__v -createdAt -updatedAt -role -status",
+      select: "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
     });
 
   const total = await Company.countDocuments(filters);
@@ -44,6 +44,7 @@ exports.createCompanyService = async (data) => {
   });
   return result;
 };
+
 
 // exports.updateProductByIdService = async (productId, data) => {
 //   const result = await Stock.updateOne(
