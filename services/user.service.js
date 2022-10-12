@@ -19,3 +19,22 @@ exports.findUserById = async (id) => {
     "-password -__v -createdAt -updatedAt "
   );
 };
+
+exports.allCandidatesService = async () => {
+  return await User.find({ role: "Candidate" }).select(
+    "-password -__v -createdAt -updatedAt "
+  );
+};
+
+exports.candidateByIdService = async (id) => {
+  //get user with id and role candidate
+  return await User.findOne({ _id: id, role: "Candidate" }).select(
+    "-password -__v -createdAt -updatedAt "
+  );
+};
+
+exports.allHiringManagersService = async () => {
+  return await User.find({ role: "Hiring-Manager" }).select(
+    "-password -__v -createdAt -updatedAt -appliedJobs"
+  );
+};
