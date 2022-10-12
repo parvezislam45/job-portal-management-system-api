@@ -12,3 +12,10 @@ exports.findUserByEmail = async (email) => {
 exports.findUserByToken = async (token) => {
   return await User.findOne({ confirmationToken: token });
 };
+
+exports.findUserById = async (id) => {
+  // return user info excluding password
+  return await User.findOne({ _id: id }).select(
+    "-password -__v -createdAt -updatedAt "
+  );
+};
