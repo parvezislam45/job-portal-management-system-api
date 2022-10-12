@@ -48,21 +48,17 @@ const jobSchema = mongoose.Schema(
         ref: "Application",
       },
     ],
+    deadline: {
+      type: Date,
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// jobSchema.pre("save", function (next) {
-//   //this ->
-//   console.log(" Before saving data");
-//   if (this.quantity == 0) {
-//     this.status = "out-of-stock";
-//   }
 
-//   next();
-// });
 
 const Job = mongoose.model("Job", jobSchema);
 

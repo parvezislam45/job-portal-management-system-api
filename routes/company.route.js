@@ -4,9 +4,6 @@ const companyController = require("../controllers/company.controller");
 const authorization = require("../middleware/authorization");
 const verifyToken = require("../middleware/verifyToken");
 
-// router.route("/bulk-update").patch(stockController.bulkUpdateProduct);
-// router.route("/bulk-delete").delete(stockController.bulkDeleteProduct);
-
 router
   .route("/")
   .get(companyController.getCompanies)
@@ -17,7 +14,5 @@ router
   );
 
 router.route("/:id").get(companyController.getCompanyById);
-// .patch(stockController.updateStockById)
-// .delete(stockController.deleteStockById)
 
 module.exports = router;

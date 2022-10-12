@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
 const Company = require("../models/Company");
 const Job = require("../models/Job");
-const ObjectId = mongoose.Types.ObjectId;
+const Application = require("../models/Application");
+const User = require("../models/User");
 
 exports.getJobsService = async (filters, queries) => {
   const jobs = await Job.find(filters)
@@ -89,59 +89,55 @@ exports.getAllJobsService = async (filters, queries) => {
 };
 
 exports.getJobByIdService = async (id) => {
-    const job = await Job.findOne({ _id: id })
-        .select("-applications")
-        .populate({
+  const job = await Job.findOne({ _id: id })
+    .select("-applications")
+    .populate({
+      path: "companyInfo",
+      select: "-jobPosts",
+      populate: {
+        path: "managerName",
+        select:
+          "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+      },
+    });
+  return job;
+};
+
+exports.applyJobService = async (jobId, userId) => {
+  const job = await Job.findOne({ _id: jobId });
+  const application = await Application.create({
+    job: jobId,
+    applicant: userId,
+  });
+  job.applications.push(application._id);
+  await job.save({
+    validateBeforeSave: false,
+  });
+  //push the application to the appliedJobs array of that user
+  const user = await User.findOne({ _id: userId });
+  user.appliedJobs.push(application._id);
+  await user.save({
+    validateBeforeSave: false,
+  });
+  //return populated application
+  const result = await Application.findOne({ _id: application._id })
+    .populate({
+      path: "job",
+      select: "-applications",
+      populate: {
         path: "companyInfo",
         select: "-jobPosts",
         populate: {
-            path: "managerName",
-            select:
+          path: "managerName",
+          select:
             "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
         },
-        });
-    return job;
-}
+      },
+    })
+    .populate({
+      path: "applicant",
+      select: "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+    });
 
-// exports.updateProductByIdService = async (productId, data) => {
-//   const result = await Stock.updateOne(
-//     { _id: productId },
-//     { $inc: data },
-//     {
-//       runValidators: true,
-//     }
-//   );
-
-//   // const product = await Product.findById(productId);
-//   // const result = await product.set(data).save();
-//   return result;
-// };
-
-// exports.bulkUpdateProductService = async (data) => {
-//   // console.log(data.ids,data.data)
-//   // const result = await Product.updateMany({ _id: data.ids }, data.data, {
-//   //     runValidators: true
-//   // });
-
-//   const products = [];
-
-//   data.ids.forEach((product) => {
-//     products.push(Stock.updateOne({ _id: product.id }, product.data));
-//   });
-
-//   const result = await Promise.all(products);
-//   console.log(result);
-
-//   return result;
-// };
-
-// exports.deleteProductByIdService = async (id) => {
-//   const result = await Stock.deleteOne({ _id: id });
-//   return result;
-// };
-
-// exports.bulkDeleteProductService = async (ids) => {
-//   const result = await Stock.deleteMany({ _id: ids });
-
-//   return result;
-// };
+  return result;
+};

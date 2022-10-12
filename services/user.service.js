@@ -21,16 +21,48 @@ exports.findUserById = async (id) => {
 };
 
 exports.allCandidatesService = async () => {
-  return await User.find({ role: "Candidate" }).select(
-    "-password -__v -createdAt -updatedAt "
-  );
+  return await User.find({ role: "Candidate" })
+    .select("-password -__v -createdAt -updatedAt ")
+    .populate({
+      path: "appliedJobs",
+      populate: {
+        path: "job",
+        select: "-applications",
+        populate: {
+          path: "companyInfo",
+          select: "-jobPosts",
+          populate: {
+            path: "managerName",
+            select:
+              "-password -__v -createdAt -updatedAt -role -appliedJobs -status ",
+          },
+        },
+      },
+      select: "-applicant",
+    });
 };
 
 exports.candidateByIdService = async (id) => {
   //get user with id and role candidate
-  return await User.findOne({ _id: id, role: "Candidate" }).select(
-    "-password -__v -createdAt -updatedAt "
-  );
+  return await User.findOne({ _id: id, role: "Candidate" })
+    .select("-password -__v -createdAt -updatedAt ")
+    .populate({
+      path: "appliedJobs",
+      populate: {
+        path: "job",
+        select: "-applications",
+        populate: {
+          path: "companyInfo",
+          select: "-jobPosts",
+          populate: {
+            path: "managerName",
+            select:
+              "-password -__v -createdAt -updatedAt -role -appliedJobs -status ",
+          },
+        },
+      },
+      select: "-applicant",
+    });
 };
 
 exports.allHiringManagersService = async () => {
