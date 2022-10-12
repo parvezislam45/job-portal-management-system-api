@@ -3,9 +3,9 @@ const { ObjectId } = mongoose.Schema.Types;
 const valid = require("validator");
 
 // schema design
-const jobSchema = mongoose.Schema(
+const applicationSchema = mongoose.Schema(
   {
-    jobTitle: {
+    companyName: {
       type: String,
       required: [true, "Please provide a title for this job."],
       trim: true,
@@ -14,7 +14,7 @@ const jobSchema = mongoose.Schema(
       minLength: [3, "Title must be at least 3 characters."],
       maxLenght: [100, "Title is too large"],
     },
-    jobPosition: {
+    managerName: {
       type: String,
       required: [true, "Please provide a position for this job."],
       trim: true,
@@ -23,15 +23,19 @@ const jobSchema = mongoose.Schema(
       minLength: [3, "Name must be at least 3 characters."],
       maxLenght: [100, "Name is too large"],
     },
-    salary: {
+    location: {
       type: Number,
       required: true,
       min: [0, "Salary must be greater than or equal to zero"],
     },
-    jobNature:{
+    companyWebsite: {
+      type: String,
+      required: [true, "Please provide a company website."],
+    },
+    jobNature: {
       type: String,
       required: [true, "Please provide the nature of the job."],
-      enum : ["remote", "onsite"]
+      enum: ["remote", "onsite"],
     },
     companyName: {
       type: String,
@@ -77,7 +81,7 @@ const jobSchema = mongoose.Schema(
   }
 );
 
-jobSchema.pre("save", function (next) {
+applicationSchema.pre("save", function (next) {
   //this ->
   console.log(" Before saving data");
   if (this.quantity == 0) {
@@ -87,6 +91,6 @@ jobSchema.pre("save", function (next) {
   next();
 });
 
-const Job = mongoose.model("Job", jobSchema);
+const Product = mongoose.model("Product", applicationSchema);
 
-module.exports = Job;
+module.exports = Product;
