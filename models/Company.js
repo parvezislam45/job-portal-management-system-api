@@ -31,10 +31,8 @@ const companySchema = mongoose.Schema(
     },
     jobPosts: [
       {
-        id: {
-          type: ObjectId,
-          ref: "Job",
-        },
+        type: ObjectId,
+        ref: "Job",
       },
     ],
   },
@@ -43,15 +41,15 @@ const companySchema = mongoose.Schema(
   }
 );
 
-companySchema.pre("save", function (next) {
-  //this ->
-  console.log(" Before saving data");
-  if (this.quantity == 0) {
-    this.status = "out-of-stock";
-  }
+// companySchema.pre("save", function (next) {
+//   //this ->
+//   console.log(" Before saving data");
+//   if (this.quantity == 0) {
+//     this.status = "out-of-stock";
+//   }
 
-  next();
-});
+//   next();
+// });
 
 const Company = mongoose.model("Company", companySchema);
 

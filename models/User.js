@@ -68,6 +68,12 @@ const userSchema = mongoose.Schema(
         "Please provide a valid contact number",
       ],
     },
+    appliedJobs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Application",
+      }
+    ],
 
 
     imageURL: {

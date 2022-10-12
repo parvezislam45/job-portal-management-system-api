@@ -28,64 +28,41 @@ const jobSchema = mongoose.Schema(
       required: true,
       min: [0, "Salary must be greater than or equal to zero"],
     },
-    jobNature:{
+    jobNature: {
       type: String,
       required: [true, "Please provide the nature of the job."],
-      enum : ["remote", "onsite"]
+      enum: ["remote", "onsite"],
     },
-    companyName: {
-      type: String,
-      required: [true, "Please provide the name of your company."],
-      trim: true,
-      // unique: [true, "Position must be unique"],
-      lowercase: true,
-      minLength: [3, "Name must be at least 3 characters."],
-      maxLenght: [100, "Name is too large"],
+    companyInfo: {
+      type: ObjectId,
+      ref: "Company",
+      required: true,
     },
     jobDescription: {
       type: String,
       required: true,
     },
-
-    imageURLs: [
+    applications: [
       {
-        type: String,
-        required: true,
-        validate: [valid.isURL, "wrong url"],
+        type: ObjectId,
+        ref: "Application",
       },
     ],
-
-    category: {
-      type: String,
-      required: true,
-    },
-
-    brand: {
-      name: {
-        type: String,
-        required: true,
-      },
-      id: {
-        type: ObjectId,
-        ref: "Brand",
-        required: true,
-      },
-    },
   },
   {
     timestamps: true,
   }
 );
 
-jobSchema.pre("save", function (next) {
-  //this ->
-  console.log(" Before saving data");
-  if (this.quantity == 0) {
-    this.status = "out-of-stock";
-  }
+// jobSchema.pre("save", function (next) {
+//   //this ->
+//   console.log(" Before saving data");
+//   if (this.quantity == 0) {
+//     this.status = "out-of-stock";
+//   }
 
-  next();
-});
+//   next();
+// });
 
 const Job = mongoose.model("Job", jobSchema);
 

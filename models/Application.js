@@ -81,16 +81,16 @@ const applicationSchema = mongoose.Schema(
   }
 );
 
-applicationSchema.pre("save", function (next) {
-  //this ->
-  console.log(" Before saving data");
-  if (this.quantity == 0) {
-    this.status = "out-of-stock";
-  }
+// applicationSchema.pre("save", function (next) {
+//   //this ->
+//   console.log(" Before saving data");
+//   if (this.quantity == 0) {
+//     this.status = "out-of-stock";
+//   }
 
-  next();
-});
+//   next();
+// });
 
-const Product = mongoose.model("Product", applicationSchema);
+const Application = mongoose.model("Application", applicationSchema);
 
-module.exports = Product;
+module.exports = Application;
