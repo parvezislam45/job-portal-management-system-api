@@ -66,6 +66,43 @@ exports.updateJobService = async (jobId, data) => {
   return result;
 };
 
+exports.getAllJobsService = async (filters, queries) => {
+  const jobs = await Job.find(filters)
+    .select("-applications")
+    .populate({
+      path: "companyInfo",
+      select: "-jobPosts",
+      populate: {
+        path: "managerName",
+        select:
+          "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+      },
+    })
+    .skip(queries.skip)
+    .limit(queries.limit)
+    .select(queries.fields)
+    .sort(queries.sortBy);
+
+  const total = await Job.countDocuments(filters);
+  const page = Math.ceil(total / queries.limit) || 1;
+  return { total, page, jobs };
+};
+
+exports.getJobByIdService = async (id) => {
+    const job = await Job.findOne({ _id: id })
+        .select("-applications")
+        .populate({
+        path: "companyInfo",
+        select: "-jobPosts",
+        populate: {
+            path: "managerName",
+            select:
+            "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+        },
+        });
+    return job;
+}
+
 // exports.updateProductByIdService = async (productId, data) => {
 //   const result = await Stock.updateOne(
 //     { _id: productId },

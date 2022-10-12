@@ -12,6 +12,8 @@ const {
   //   getCompaniesService,
   createJobService,
   updateJobService,
+  getAllJobsService,
+  getJobByIdService,
 } = require("../services/job.service");
 
 // exports.getCompanies = async (req, res, next) => {
@@ -370,3 +372,80 @@ exports.updateJob = async (req, res) => {
     });
   }
 };
+
+exports.getAllJobs = async ( req, res) => {
+  try {
+    //{price:{$ gt:50}
+    //{ price: { gt: '50' } }
+    console.log(req.query);
+
+    let filters = { ...req.query };
+
+    //sort , page , limit -> exclude
+    const excludeFields = ["sort", "page", "limit"];
+    excludeFields.forEach((field) => delete filters[field]);
+
+    //gt ,lt ,gte .lte
+    let filtersString = JSON.stringify(filters);
+    filtersString = filtersString.replace(
+      /\b(gt|gte|lt|lte|ne|eq)\b/g,
+      (match) => `$${match}`
+    );
+
+    filters = JSON.parse(filtersString);
+
+    const queries = {};
+
+    if (req.query.sort) {
+      // price,qunatity   -> 'price quantity'
+      const sortBy = req.query.sort.split(",").join(" ");
+      queries.sortBy = sortBy;
+      console.log(sortBy);
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      queries.fields = fields;
+      console.log(fields);
+    }
+
+    if (req.query.page) {
+      const { page = 1, limit = 10 } = req.query; // "3" "10"
+   
+      const skip = (page - 1) * parseInt(limit);
+      queries.skip = skip;
+      queries.limit = parseInt(limit);
+    }
+
+    const jobs = await getAllJobsService(filters, queries);
+
+    res.status(200).json({
+      status: "success",
+      data: jobs,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "can't get the data",
+      error: error.message,
+    });
+  }
+};
+
+exports.getJobById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const job = await getJobByIdService(id);
+
+    res.status(200).json({
+      status: "success",
+      data: job,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "can't get the data",
+      error: error.message,
+    });
+  }
+}

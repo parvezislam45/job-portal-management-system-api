@@ -10,13 +10,12 @@ const verifyToken = require("../middleware/verifyToken");
 
 router
   .route("/jobs")
-  // .get(jobController.getJobs)
+  .get(jobController.getAllJobs)
   .post(
     verifyToken,
     authorization("Admin", "Hiring-Manager"),
     jobController.createJob
-  )
-  
+  );
 
 router
   .route("/manager/jobs")
@@ -27,14 +26,16 @@ router
   );
 
 router
-.route("/manager/jobs/:id").get(
-  verifyToken,
-  authorization("Admin", "Hiring-Manager"),
-  jobController.getJobByManagerTokenJobId
-);
+  .route("/manager/jobs/:id")
+  .get(
+    verifyToken,
+    authorization("Admin", "Hiring-Manager"),
+    jobController.getJobByManagerTokenJobId
+  );
 
 router
   .route("/jobs/:id")
+  .get(jobController.getJobById)
   .patch(
     verifyToken,
     authorization("Admin", "Hiring-Manager"),
