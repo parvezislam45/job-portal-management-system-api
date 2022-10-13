@@ -117,17 +117,34 @@ exports.getJobByManagerTokenJobId = async (req, res) => {
             "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
         },
         select: "-job",
+      })
+      .populate({
+        path: "companyInfo",
+        select: "-jobPosts",
+        populate: {
+          path: "managerName",
+          select:
+            "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+        },
       });
+
     //find the required job from jobs  with req.params id
     const { id } = req.params;
     const job = jobs.find((job) => {
       return job._id.toString() == id.toString();
     });
 
+    //check if managerName.email is equal to req.user.email
+    if (req.user.email !== job.companyInfo.managerName.email) {
+      return res.status(400).json({
+        status: "fail",
+        message: "You are not authorized to get internal data of this job",
+      });
+    }
+
     res.status(200).json({
       status: "success",
       data: {
-        managerInfo: user,
         job,
       },
     });
