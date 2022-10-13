@@ -2,8 +2,6 @@ const { google } = require("googleapis");
 const fs = require("fs");
 
 exports.authenticateGoogle = () => {
-  console.log(`../jobs-portal-saminravi99-42d2fb0d6571.json`);
-  console.log(__dirname + `../jobs-portal-saminravi99-42d2fb0d6571.json`);
   const auth = new google.auth.GoogleAuth({
     keyFile: `${__dirname}/../jobs-portal-saminravi99-42d2fb0d6571.json`,
     scopes: "https://www.googleapis.com/auth/drive",
@@ -33,11 +31,14 @@ exports.uploadToGoogleDrive = async (file, auth) => {
 };
 
 exports.deleteFile = (filePath) => {
-  fs.unlink(filePath, () => {
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.log(err);
+    }
     console.log("file deleted");
   });
 };
- 
+
 // 1_nWc3f3sMIsmne1nnqEwdjMk6s_QUR_c
 // 1_nWc3f3sMIsmne1nnqEwdjMk6s_QUR_c
 // resume.data.id
