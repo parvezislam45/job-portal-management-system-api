@@ -142,3 +142,39 @@ exports.applyJobService = async (jobId, userId, resumeLink) => {
 
   return result;
 };
+
+exports.getHighestPaidJobsService = async () => {
+  //top 10 highest paid jobs which has not crossed deadline
+  const jobs = await Job.find({ deadline: { $gte: Date.now() } })
+    .sort({ salary: -1 })
+    .limit(10)
+    .select("-applications")
+    .populate({
+      path: "companyInfo",
+      select: "-jobPosts",
+      populate: {
+        path: "managerName",
+        select:
+          "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+      },
+    });
+  return jobs;
+};
+
+exports.getMostAppliedJobsService = async () => {
+  //top 5 most applied jobs which has not crossed deadline
+  const jobs = await Job.find({ deadline: { $gte: Date.now() } })
+    .sort({ applications: -1 })
+    .limit(5)
+    .select("-applications")
+    .populate({
+      path: "companyInfo",
+      select: "-jobPosts",
+      populate: {
+        path: "managerName",
+        select:
+          "-password -__v -createdAt -updatedAt -role -status -appliedJobs",
+      },
+    });
+  return jobs;
+};

@@ -6,6 +6,9 @@ const authorization = require("../middleware/authorization");
 const pdfUploader = require("../middleware/pdfUploader");
 const verifyToken = require("../middleware/verifyToken");
 
+router.route("/jobs/highest-paid-jobs").get(jobController.getHighestPaidJobs);
+
+router.route("/jobs/most-applied-jobs").get(jobController.getMostAppliedJobs);
 
 router
   .route("/jobs")
@@ -41,6 +44,13 @@ router
     jobController.updateJob
   );
 
-router.route("/jobs/:id/apply").post(verifyToken, authorization("Candidate"), pdfUploader.single("resume"), jobController.applyJob);
+router
+  .route("/jobs/:id/apply")
+  .post(
+    verifyToken,
+    authorization("Candidate"),
+    pdfUploader.single("resume"),
+    jobController.applyJob
+  );
 
-module.exports = router; 
+module.exports = router;

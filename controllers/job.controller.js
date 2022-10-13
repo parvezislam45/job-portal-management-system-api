@@ -9,6 +9,8 @@ const {
   getAllJobsService,
   getJobByIdService,
   applyJobService,
+  getHighestPaidJobsService,
+  getMostAppliedJobsService
 } = require("../services/job.service");
 
 exports.createJob = async (req, res, next) => {
@@ -344,6 +346,40 @@ exports.applyJob = async (req, res) => {
       result: {
         data: result,
       },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "can't get the data",
+      error: error.message,
+    });
+  }
+};
+
+exports.getHighestPaidJobs = async (req, res) => {
+  try {
+    const jobs = await getHighestPaidJobsService();
+
+    res.status(200).json({
+      status: "success",
+      data: jobs,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "can't get the data",
+      error: error.message,
+    });
+  }
+};
+
+exports.getMostAppliedJobs = async (req, res) => {
+  try {
+    const jobs = await getMostAppliedJobsService();
+
+    res.status(200).json({
+      status: "success",
+      data: jobs,
     });
   } catch (error) {
     res.status(400).json({
