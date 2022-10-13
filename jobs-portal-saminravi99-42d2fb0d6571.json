@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "jobs-portal-saminravi99",
+  "private_key_id": "42d2fb0d65711810900e5af2b311bc47ba2fbea1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCkVpgNjLEcKF+y\nZxEjNC9pJC8ObDWmZuWBbaqlA7D1uvlY6u+P/R9HRcM7FPuTnwIXDlicxuRekgkj\nqHa2OSWjkz489QwWY/Y7MxrlnBLJkrdmVGX6vCgCE0WbcSbXXgYHgR8PYtvV6Of5\nG+eU/nA45woi9HLmwsa/7MA1q77EI2QmeuUr8FCQ1GL8rOv6WFHrzyIOSdI0Rlsz\nZDCP89rxNWxQcXt3BmTdtZojmWPg1kcPsvC4dN3PIp5d5QtSWJ9S1UlN+XZCSmrm\nFhgO7VIqz9Iz04kefEkFfmfTsmXbyEfy+xWLxN0+CGAhQ0CRoQf7HdZ/2u3Z7Nu2\nxqx9LsBXAgMBAAECggEAAUuPajfsI2ksC+dlCq58GyuGVWpD5/pSn7kCCcfkKqOd\nGHbNiYh4qSKjHcGWE/1CUnUx/JZSsW4cNVQ8D0aXBdmAuZFC1aBXDfNiqGGZAk6u\nNFfA7/9wn0eQml+Da1oZ2RBK8t+YFPD/dwahxhpVPxWPDmR3zVrGnzeZ8jJW0Avm\nGk0rvmq0Rwc4vOQA1+n4V6rWeY8g7CEY8xtONb4OoX4Dl56C0R0W4u0lIgpQ8INr\n1vm6Iccj4i6qB3rHIZ4P5BtGbN9bzXKuGHct5tjVORg2/t/GBelDhKFTiAvg1pSj\ngU0bwu/vp+aEiv266Am7lKHcOkkIvD88qY8+i8MFYQKBgQDmpk9F5t6MqJyyqy/c\nC050qoBZbQc6Bplebf11MbXyM/RQu/E7rfxG28K0ORCFtWVeZrvhY5EluAoYT1lF\nDsMK5L4SOQnByBdQ/nOecwM1td7IFSme2IGbqlLnmSAl0r5eomzEQH3dYJPXhnPw\nb5m5LXZnz5D9HKOrudb7IXCqdwKBgQC2ZoJWXeCZqYTgloLk2o/PD6du+DHAchCS\nmidhYpH7zA1FZV0XFKvx4zQLvbQ/JwydICJgHntOW7gEIHwbUZ1CEdGPupamcoaY\neDn1wTgj7WnukUWZJOBxb5GF/eZRpqo1rHELI0eyYLb6Wb7CfmWrTsxtYJu2HTTp\nNjq7BTgxIQKBgBgfMI848/F1+N1eteSncg8VfdLcajMRWZzcl/NXvZWVBWokHbiG\nG6o1dYlvpmC1deKHkAKkbRuqwbOFKOrl/lP3VEGHoZOYn4ei9OiPUridSq1WOUIZ\nloR3LbB2/Tu3bJ1tEz77F669WPjjYOC2azdIn+d/d8Rg6GUfTHJ7LtNFAoGARx79\nX1PHieMRjsjhTP7z6BcAgEKCk7lmQOOey1g19+p+mjqF68QBr5WZ66ISsDU3s+Sd\nwsDf75PP0rwf6D8QhHySK+rjZw9s7/KhFvQ6QbgHACDg9G/unAyWv5paviewYrFU\nerVM9X7EmiV4Pjouxnc5OsTask39HZopmFbWrEECgYAS0QnoBtq12xufqXudLsF4\nexmbmsgD6YrjICW6PePV7PiOMp81GNER/tLCxG3Ao23oNcp4dBTvPsb/6cA+ClWV\nmKqLDPXLPDUl6RU1kFOHQ2X5a4vZP64LyxiCxEi4UlF1n3LjiiMO4wbrc4UarLkM\n8Wm9I18arGfZDxJAKEr/fw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "job-portal-api-saminravi99@jobs-portal-saminravi99.iam.gserviceaccount.com",
+  "client_id": "109659415432949239011",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/job-portal-api-saminravi99%40jobs-portal-saminravi99.iam.gserviceaccount.com"
+}

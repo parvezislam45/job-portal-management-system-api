@@ -1,5 +1,6 @@
 const Company = require("../models/Company");
 const Application = require("../models/Application");
+const googleDriveService = require("../middleware/googleDriveService");
 const Job = require("../models/Job");
 const User = require("../models/User");
 const {
@@ -9,7 +10,6 @@ const {
   getJobByIdService,
   applyJobService,
 } = require("../services/job.service");
-const { jobs } = require("googleapis/build/src/apis/jobs");
 
 exports.createJob = async (req, res, next) => {
   try {
@@ -305,12 +305,28 @@ exports.applyJob = async (req, res) => {
       });
     }
 
-    const result = await applyJobService(id, user._id);
+    if (!req.file) {
+      res.status(400).json({
+        status: "fail",
+        message: "Please upload your resume",
+      });
+      return;
+    }
+
+    const auth = googleDriveService.authenticateGoogle();
+    const resume = await googleDriveService.uploadToGoogleDrive(req.file, auth);
+    googleDriveService.deleteFile(req.file.path);
+
+    const resumeLink = `https://drive.google.com/file/d/${resume.data.id}/view`;
+
+    const result = await applyJobService(id, user._id, resumeLink);
 
     res.status(200).json({
       status: "success",
       message: "Job applied successfully!",
-      result: result,
+      result: {
+        data: result,
+      },
     });
   } catch (error) {
     res.status(400).json({

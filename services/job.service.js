@@ -103,11 +103,12 @@ exports.getJobByIdService = async (id) => {
   return job;
 };
 
-exports.applyJobService = async (jobId, userId) => {
+exports.applyJobService = async (jobId, userId, resumeLink) => {
   const job = await Job.findOne({ _id: jobId });
   const application = await Application.create({
     job: jobId,
     applicant: userId,
+    resume: resumeLink,
   });
   job.applications.push(application._id);
   await job.save({
